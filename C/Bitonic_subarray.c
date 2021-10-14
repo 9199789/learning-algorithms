@@ -26,3 +26,48 @@ Array elements are:
 23
 Length of max length Bitonic Subarray is 5
 */
+#include<stdio.h>
+#include<stdlib.h>
+ 
+int bitonic(int arr[], int n)
+{
+    int inc[n]; 
+    int dec[n]; 
+    int i, max;
+ 
+  
+    inc[0] = 1;
+    dec[n-1] = 1;
+ 
+    for (i = 1; i < n; i++)
+       inc[i] = (arr[i] >= arr[i-1])? inc[i-1] + 1: 1;
+ 
+    for (i = n-2; i >= 0; i--)
+       dec[i] = (arr[i] >= arr[i+1])? dec[i+1] + 1: 1;
+ 
+    max = inc[0] + dec[0] - 1;
+    for (i = 1; i < n; i++)
+        if (inc[i] + dec[i] - 1 > max)
+            max = inc[i] + dec[i] - 1;
+
+    return max;
+}
+ 
+
+int main()
+{
+    int arr[30], n;
+    printf("How many elements? Enter the size:\n");
+    scanf("%d", &n);
+    
+    printf("Enter 6 elements ");
+    for(int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+        
+    printf("Array elements are:\n");  
+    
+    for(int i = 0; i < n; i++)
+        printf("%d\n", arr[i]);
+    printf("Length of max length Bitonic Subarray is %d", bitonic(arr, n));
+    return 0;
+}
